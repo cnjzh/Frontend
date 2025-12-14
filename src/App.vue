@@ -8,7 +8,7 @@ export default  {
  
 </template>
 
-<style>
+<style setup>
 
 
 </style>
