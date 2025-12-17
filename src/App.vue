@@ -4,7 +4,10 @@
  <van-nav-bar title="维修工单系统" />
  <van-tabs >
       <van-tab title="首页"></van-tab>
-  <van-tab title="AdminLogin管理员登陆"></van-tab>
+  <van-tab title="AdminLogin管理员登陆">
+   
+
+  </van-tab>
   <van-tab title="queryissue查询工单"></van-tab>
   <van-tab title="history历史工单"></van-tab>
 </van-tabs>
@@ -21,8 +24,7 @@ export default  {
         const poster=ref("");
         const description=ref("");
         const componentName=ref("APPUpload")
-        return
-        {
+        return {
             poster,
             description,
             componentName
@@ -30,7 +32,8 @@ export default  {
 
     },
     components:
-    {APPUpload,
+    {
+        APPUpload,
 
     }
 }
