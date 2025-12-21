@@ -1,5 +1,5 @@
 <template>
-<van-form @submit="onSubmit">
+<van-form @submit="submit" v-show="!is_submit">
   <van-cell-group inset>
     <van-field
       v-model.lazy.trim="poster"
@@ -15,9 +15,15 @@
       placeholder="工单描述"
       :rules="[{ required: true, message: '请填写工单描述' }]"
     />
-     <van-field name="uploader" label="文件上传">
+     <van-field name="uploader" label="添加图片">
   <template #input  >
-    <van-uploader v-model="imageArr" accept="image/*" multiple="true"/>
+    <van-uploader 
+    v-model="imageArr"
+     accept="image/*"
+      multiple="true"
+       max-size="1024*1024*10" 
+       max-count="2"
+       />
   </template>
 </van-field>
 
@@ -28,7 +34,6 @@
     </van-button>
   </div>
 </van-form>
-
 </template>
 <script>
   import {ref} from "vue";
@@ -40,11 +45,32 @@
          const poster=ref("");
         const description=ref("");
         const imageArr=ref([]);
-  
+        const tel = ref('');
+    const name = ref('');
+        const is_submit=ref(false);
+        const is_upload=ref(false);
+
+        const submit=()=>
+{
+    const  values={
+      poster:poster.value,
+      desc:description.value,
+      imageUrl:[...imageArr.value],
+      
+    };
+    console.log(values);
+
+    is_submit.value=true;
+}  
         return {
           poster,
           description,
-          imageArr
+          imageArr,
+          submit,
+          is_submit,
+          is_upload, 
+       
+        
         }
 
       }
