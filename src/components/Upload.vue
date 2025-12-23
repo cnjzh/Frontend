@@ -34,15 +34,29 @@
     </van-button>
   </div>
 </van-form>
+<div v-show="is_submit&&!is_upload">
+    <h1 style="text-align: center">确认提交</h1>
+  <div class="upload-content">
+    <ul>
+      <li>提交人:{{ poster }}</li>
+        <li>工单描述:{{ description }}</li>
+    </ul>
+  </div>
+   <van-button round block type="primary" native-type="submit">
+      确定提交
+    </van-button>
+     <van-button round block type="default" native-type="submit">
+      取消
+    </van-button>
+
+  </div>
 </template>
-<script>
+<script setup>
   import {ref} from "vue";
        
-    export default
-    { name:"APPUpload",
-      setup()
-      {
-         const poster=ref("");
+
+     
+        const poster=ref("");
         const description=ref("");
         const imageArr=ref([]);
         const tel = ref('');
@@ -61,24 +75,18 @@
     console.log(values);
 
     is_submit.value=true;
-}  
-        return {
-          poster,
-          description,
-          imageArr,
-          submit,
-          is_submit,
-          is_upload, 
+  
        
-        
-        }
 
       }
        
-    }
+    
     
 
 </script>
 <style>
+.upload-content
+{text-align: left;}
+  
 
 </style>
