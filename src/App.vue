@@ -1,14 +1,14 @@
 
 
 <template>
- <van-nav-bar title="维修工单系统" />
+ <van-nav-bar title="维修工单系统"  right-text="刷新" @click-right.prevent="refresh" />
  <van-tabs v-model:active="componentName" >
  <van-tab title="首页" name="APPUpload"></van-tab>
   <van-tab title="AdminLogin管理员登陆" name="AppAdmin"></van-tab>
   <van-tab title="queryissue查询工单"name="AppQuery"> </van-tab>
   <van-tab title="history历史工单" name="AppHistory" ></van-tab>
 </van-tabs>
-<component :is="componentName"></component>
+<component :is="componentName" :API_URL="API_URL"></component>
 
 </template>
 <script >
@@ -21,11 +21,15 @@ export default  {
     name:"APP",
     setup()
     {
-        const componentName=ref("APPUpload");
-        return{
-            componentName,
+        const API_URL="https://127.0.0.1:3000/api/v1/"
+        const componentName=ref("APPUpload"); 
+        const refresh=()=>{
+            location.reload(true);
         };
-
+        return{
+            componentName, refresh,
+        };
+       
     },
     components:
     {
@@ -33,6 +37,7 @@ export default  {
         AppAdmin,
         AppHistory,
         AppQuery,
+        API_URL,
 
 
     }
@@ -41,6 +46,15 @@ export default  {
 
 </script>
 <style >
-
+.up-load-content
+{   
+    width:80%;
+    margin: 0,auto;
+    text-align: left;
+    border-width:4px;
+    border-color: black;
+    border-radius:4px ;
+    border-bottom:20px;
+}
 
 </style>
