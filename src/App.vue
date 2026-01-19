@@ -21,13 +21,14 @@ export default  {
     name:"APP",
     setup()
     {
-        const API_URL="https://127.0.0.1:3000/api/v1/"
+        const API_URL="http://127.0.0.1:3000/api/v1/"
         const componentName=ref("APPUpload"); 
         const refresh=()=>{
             location.reload(true);
         };
         return{
-            componentName, refresh,
+            componentName, refresh,API_URL,
+
         };
        
     },
@@ -37,7 +38,7 @@ export default  {
         AppAdmin,
         AppHistory,
         AppQuery,
-        API_URL,
+        
 
 
     }

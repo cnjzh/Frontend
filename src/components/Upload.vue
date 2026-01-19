@@ -72,9 +72,9 @@ class="upload-loading-spinner"
 >
 加载中ing
 </van-loading >
-<div v-show="upload_complete" class="center btn-margin">
-  <h2 v-if="!upload_success">上传失败，请重试</h2>
-  <h2 v-else>上传成功，您的工单号为：{{ uploadIssueId }}</h2>
+<div v-show="upload_complete" class="center ">
+  <h2 v-if="upload_success">上传成功，您的工单号为：{{ uploadIssueId }}</h2>
+  <h2 v-else>上传失败，请重试</h2>
 
 <van-button round block type="primary" @click.prevent="reset">继续上传</van-button>
 </div>
@@ -89,15 +89,17 @@ class="upload-loading-spinner"
         }
        })
 
-
+ const is_upload=ref(false);
+ console.log(is_upload.value);
         const poster=ref("");
         const description=ref("");
        let imageArr=ref([]);
-        const tel = ref('');
-    const name = ref('');
+        
+         const upload_success=ref(false);
+         const uploadIssueId=ref(0);
         const is_submit=ref(false);
-        const is_upload=ref(false);
-
+      
+       const upload_complete=ref(false);
         const submit=()=>
 {
     const  values={
@@ -106,7 +108,7 @@ class="upload-loading-spinner"
       imageUrl:[...imageArr.value],
       
     }
-    // console.log(values);
+    console.log(values);
     // console.log(imageArr);
     // imageArr.value=[...imageArr.value.map((imageobj)=>imageobj.objectUrl)];
 
@@ -121,19 +123,30 @@ class="upload-loading-spinner"
         var formdata = new FormData();
 formdata.append("poster", poster.value);
 formdata.append("description", description.value);
-imageArr.value.ForEach(
+imageArr.value.forEach(
   (file,idx)=>
   {
-    const exname=file.file.name.split(".").at(-1);
+    const extname=file.file.name.split(".").at(-1);
   
-  FormData.append(
+  formdata.append(
     "imgs",
     file.file,
     `${idx.toString().padStart(2,"0")}.${extname}`
   );}
 );
+// imageArr.value.forEach(
+//   (image)=>
+//   {
+//     const extname=image.file.name.split(".").at(-1);
+  
+//   formdata.append(
+//     "imgs",
+//     file.file,
+//     `${idx.toString().padStart(2,"0")}.${extname}`
+//   );}
+// );
 
-     
+ 
 // formdata.append("img", fileInput.files[0], "D:\Users\Lenovo\Desktop\6157e83b20921404eee4c6d4dd5f192a.jpg");
 // formdata.append("img", fileInput.files[0], "D:\Users\Lenovo\Desktop\pubviz - keep.pdf");
       const response= await fetch(`${props.API_URL}issue`,
@@ -143,9 +156,27 @@ imageArr.value.ForEach(
           }
         );
 
-  const result=await respond.json();
-  upload_complete.value=true;
+  const result=await response.json();
+       upload_complete.value=true;
+  if(!response.ok||result.status!=="success")
+  {
+
+    return;
+  }
+  upload_success.value=true;
+  uploadIssueId.value=result.data.id
   
+      }
+      const reset=()=>
+      {
+       poster.value="";
+       description.value="";
+       imageArr.value=[];
+       is_submit=false;
+       is_upload.value=false;
+       upload_complete=false;
+       upload_success=false;
+       uploadIssueId.value=0;
       }
        
     
@@ -158,6 +189,9 @@ imageArr.value.ForEach(
     text-align: center;
     margin-top: 40px;
   }
-
+.center 
+{
+      text-align: center;
+}
 
 </style>
