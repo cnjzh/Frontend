@@ -165,19 +165,33 @@ imageArr.value.forEach(
   }
   upload_success.value=true;
   uploadIssueId.value=result.data.id
-  
+  updateIssueStorage(uploadIssueId.value);
+      }
+      const updateIssueStorage=(id)=>
+      {
+        const history=localStorage.getItem("issue-history");
+        if(history)
+      {
+        const historySet=new Set(JSON.parse(history));
+        historySet.add(id);
+        localStorage.setItem("issue-history",JSON.stringify([...historySet]));
+        return ;
+      }
+      localStorage.setItem("issue-history",[id]);
+
       }
       const reset=()=>
       {
        poster.value="";
        description.value="";
        imageArr.value=[];
-       is_submit=false;
+       is_submit.value=false;
        is_upload.value=false;
-       upload_complete=false;
-       upload_success=false;
+       upload_complete.value=false;
+       upload_success.value=false;
        uploadIssueId.value=0;
       }
+
        
     
     

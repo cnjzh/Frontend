@@ -8,7 +8,8 @@
   <van-tab title="queryissue查询工单"name="AppQuery"> </van-tab>
   <van-tab title="history历史工单" name="AppHistory" ></van-tab>
 </van-tabs>
-<component :is="componentName" :API_URL="API_URL"></component>
+<keep-alive><component :is="componentName" :API_URL="API_URL"></component></keep-alive>
+
 
 </template>
 <script >
