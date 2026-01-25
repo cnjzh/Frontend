@@ -58,5 +58,14 @@ export default  {
     border-radius:4px ;
     border-bottom:20px;
 }
+  .upload-loading-spinner
+  {
+    text-align: center;
+    margin-top: 40px;
+  }
+.center 
+{
+      text-align: center;
+}
 
 </style>

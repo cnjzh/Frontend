@@ -198,7 +198,7 @@ imageArr.value.forEach(
 
 </script>
 <style scoped>
-  .upload-loading-spinner
+  /* .upload-loading-spinner
   {
     text-align: center;
     margin-top: 40px;
@@ -206,6 +206,6 @@ imageArr.value.forEach(
 .center 
 {
       text-align: center;
-}
+} */
 
 </style>
