@@ -28,12 +28,12 @@
 </van-field>
 
   </van-cell-group>
-  <div style="margin: 16px" v-show="!is_submit">
+  <div  class="btn-margin" v-show="!is_submit">
     <van-button round block type="primary" native-type="submit">
       提交
     </van-button>
    </div>
-    <div style="margin: 16px" v-show="is_submit">
+    <div  class="btn-margin"  v-show="is_submit">
     <van-button round block type="primary" @click.prevent="upload">
       确认提交
     </van-button>
@@ -82,6 +82,7 @@ class="upload-loading-spinner"
 </template>
 <script setup>
   import {ref,defineProps} from "vue";
+  import { gethistory ,setHistory } from "@/assets/js/util.js";
        const props=defineProps({
         API_URL:{
           type:String,
@@ -164,22 +165,9 @@ imageArr.value.forEach(
     return;
   }
   upload_success.value=true;
-  uploadIssueId.value=result.data.id
-  updateIssueStorage(uploadIssueId.value);
-      }
-      const updateIssueStorage=(id)=>
-      {
-        const history=localStorage.getItem("issue-history");
-        if(history)
-      {
-        const historySet=new Set(JSON.parse(history));
-        historySet.add(id);
-        localStorage.setItem("issue-history",JSON.stringify([...historySet]));
-        return ;
-      }
-      localStorage.setItem("issue-history",[id]);
-
-      }
+  uploadIssueId.value=result.data.id;
+  setHistory(uploadIssueId.value);
+}
       const reset=()=>
       {
        poster.value="";

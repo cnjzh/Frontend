@@ -11,7 +11,7 @@
     />
 
   </van-cell-group>
-  <div style="margin: 16px;">
+  <div  class="btn-margin" >
     <van-button round block type="primary" native-type="submit">
       查询
     </van-button>
@@ -31,17 +31,18 @@ class="upload-loading-spinner"
     <van-list>
   <van-cell v-for="item in processIssueObj(issueObj)" :key="item" :title="item" />
 </van-list>
-<van-button round block type="primary" @click.prevent="showImages" >查看图片</van-button>
+<div class="btn-margin" ><van-button round block type="primary" @click.prevent="showImages" >查看图片</van-button>
 <br>
-<van-button round block type="normal"  @click.prevent="reset">继续查询</van-button>
+<van-button round block type="normal"  @click.prevent="reset">继续查询</van-button></div>
+
 </div>
  
 
  
-  <h3 v-else>
+  <div v-else  class="btn-margin" >
     <h3 class="center">查询失败，请重试</h3>
     <van-button round block type="normal"  @click.prevent="reset">继续查询</van-button>
-  </h3>
+  </div>
 
 
 </div>
@@ -49,7 +50,7 @@ class="upload-loading-spinner"
 
 </template>
 <script setup>
-    import {ref} from "vue";
+    import {ref,defineProps} from "vue";
     import {processIssueObj}from "../assets/js/util.js";
         const is_query=ref(false);
     const query_complete=ref(false);

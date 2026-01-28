@@ -67,5 +67,7 @@ export default  {
 {
       text-align: center;
 }
-
+.btn-margin{
+    margin:16px;
+}
 </style>

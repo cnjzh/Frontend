@@ -10,7 +10,8 @@ export const converTimestampToISOString=(timestamp)=>
     const isoString=`${originISOString.slice(0,13)}T${hour}${originISOString.slice(13)}`;
     return isoString;
 }
-export  const gethistory=()=>
+
+export  const gethistory=()=> 
 {
     const history=localStorage.getItem("issue-history");
     if(history)
@@ -24,7 +25,7 @@ export const setHistory=(issueId)=>
 {
     const history=gethistory();
     if(history.length===0){
-        loccalStorage.setItem("issue-history",JSON.stringify([issueId]));
+        localStorage.setItem("issue-history",JSON.stringify([issueId]));
         return ;
     }
     history.push(issueId);
