@@ -1,14 +1,17 @@
 
 
 <template>
- <van-nav-bar title="维修工单系统"  right-text="刷新" @click-right.prevent="refresh" />
+ <van-nav-bar title="维修工单系统"  right-text="刷新" @click-right.prevent="refresh" 
+ :left-text="leftText"
+ :left-disabled="leftText===''"
+ @click-left.prevent="refresh"/>
  <van-tabs v-model:active="componentName" >
  <van-tab title="首页" name="APPUpload"></van-tab>
   <van-tab title="AdminLogin管理员登陆" name="AppAdmin"></van-tab>
   <van-tab title="queryissue查询工单"name="AppQuery"> </van-tab>
   <van-tab title="history历史工单" name="AppHistory" ></van-tab>
 </van-tabs>
-<keep-alive><component :is="componentName" :API_URL="API_URL"></component></keep-alive>
+<keep-alive><component :is="componentName" :API_URL="API_URL" @loginSuccess="addLoadout"></component></keep-alive>
 
 
 </template>
@@ -27,8 +30,13 @@ export default  {
         const refresh=()=>{
             location.reload(true);
         };
+        const leftText=ref("");
+        const addLoadout=()=>
+        {
+            leftText.value="退出登录";
+        }
         return{
-            componentName, refresh,API_URL,
+            componentName, refresh,API_URL,leftText,addLoadout
 
         };
        
@@ -39,7 +47,7 @@ export default  {
         AppAdmin,
         AppHistory,
         AppQuery,
-        
+      
 
 
     }

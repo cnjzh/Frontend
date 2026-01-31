@@ -1,5 +1,5 @@
 <template>
-    <div>Admin component </div>
+    
     <van-form @submit="login" v-show="!login_success":disabled="is_login">
   <van-cell-group inset>
     <van-field
@@ -34,13 +34,18 @@ class="upload-loading-spinner"
 >
 加载中ing
 </van-loading >
-   <div v-show="login_success">登陆成功</div>
+
    
 </van-form>
+<app-admin-content   v-if="is_admin===true"></app-admin-content>
+   <!-- <div v-show="login_success">登陆成功</div> -->
 </template>
 
 <script setup>
 import {ref}from "vue";
+import AppAdminContent  from "./AdminContent.vue";
+const emit=defineEmits(["loginsucess"])
+const is_admin=ref(false)
 const staffName=ref("");
 const password=ref("");
 const is_login=ref(false);
@@ -55,8 +60,9 @@ const props=defineProps({
 })
 const login=async ()=>{
  is_login.value=true;
- const response=fetch(`${props.API_URL}staff?staffName=${staffName.value}&password=${password.value}`);
- const result=await response.json();
+ const response= await fetch(`${props.API_URL}staff?staffName=${staffName.value}&password=${password.value}`);
+
+   const result= await response.json();
  login_complete.value=true;
  console.log(response.ok);
  console.log(result.status);
@@ -68,6 +74,8 @@ const login=async ()=>{
 
  }
  login_success.value=true;
+ is_admin.value=result.data.staffRole==="admin" ;
+ emit("loginSuccess");
 }
 const resetLogin=()=>
 {
@@ -76,6 +84,7 @@ login_complete.value=false;
 login_success.value=false;
 staffName.value="";
 password.value=""; 
+is_admin.value=false;
 }
 </script>
 <style></style>
