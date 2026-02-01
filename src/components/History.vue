@@ -1,6 +1,5 @@
 <template>
-   <van-loading 
-color="#0094ff"
+   <van-loading color="#0094ff"
 size="40px"
 v-if="!load_complete"
 class="upload-loading-spinner">
