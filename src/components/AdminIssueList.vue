@@ -8,7 +8,13 @@
 <div class="btn-margin" ><van-button round block type="primary" @click.prevent="showImages(issueObj)" >查看图片</van-button>
 <br>
 
-    <van-button round block type="success" v-if="issueObj.state=='wait'" >分配工单号</van-button>
+    <!-- <van-button round block type="success"  @click.prevent="assignStaff" >分配负责人</van-button> -->
+    
+    //TODO  the van-button
+    <van-button type="success" round block @click.prevent="assignStaff"  v-if="issueObj.state=='wait'">分配负责人</van-button>
+
+
+
 </div>
 <van-divider />
 
@@ -26,8 +32,11 @@ import Config from "../assets/js/config.js"
 import {ref} from"vue";
     import { showImagePreview } from 'vant';
 import { processIssueObj } from "@/assets/js/util.js";
+import { showToast } from 'vant';
 const {API_URL} =Config;
 const issueObjArr=ref("");
+const showPopover=ref("");
+const staffArr=ref([]);
 const showImages=(issueObj)=>
 {
   showImagePreview({
@@ -40,16 +49,39 @@ const loadIssueList=async()=>{
     const result= await response.json();
     if(!response.ok||result.status!=="success")
 {
-    alert("加载失败");
+    alert("加载工单失败");
     return ;
 }
     issueObjArr.value=(result.data);
 }
+const loadStaffList=async()=>{
+ const response=await fetch(`${API_URL}staff`);
+    const result= await response.json();
+    console.log(2222);
+       console.log(response.ok);
+ 
+    console.log(result.status);
+    if(!response.ok||result.status!=="success")
+{
+    alert("加载员工信息失败");
+    return ;
+}
+    staffArr.value=result.data.map((staff)=>{
+        return 
+        {
+             text:`${staff.id}:${staff.staffName}`}
+    } );
+}
+const assignStaff=(action)=>
+{
+    showToast(action.text);
+}
 onMounted(async() => {
     loadIssueList();
+    loadStaffList();
 })
 </script>
 
-<style lang="scss" scoped>
+<style >
 
 </style>
