@@ -1,4 +1,14 @@
 <template>
+    <div v-show="show_staff_list">
+ <van-list>
+  <van-cell 
+  v-for="staff in staffArr" 
+  :key="staff" 
+  :title="staff" />
+  
+  <van-divider />
+</van-list>
+    </div>
 <div  class="center">
     <h3 v-if="issueObjArr.length>0">历史工单数量{{ issueObjArr.length   }}
       <div v-for="issueObj in issueObjArr">
@@ -10,8 +20,8 @@
 
     <!-- <van-button round block type="success"  @click.prevent="assignStaff" >分配负责人</van-button> -->
     
-    //TODO  the van-button
-    <van-button type="success" round block @click.prevent="assignStaff"  v-if="issueObj.state=='wait'">分配负责人</van-button>
+
+    <van-button type="success" round block @click.prevent="show_staff_list=true"  v-if="issueObj.state=='wait'">分配负责人</van-button>
 
 
 
@@ -32,7 +42,9 @@ import Config from "../assets/js/config.js"
 import {ref} from"vue";
     import { showImagePreview } from 'vant';
 import { processIssueObj } from "@/assets/js/util.js";
-import { showToast } from 'vant';
+const show_staff_list=ref(false);
+
+
 const {API_URL} =Config;
 const issueObjArr=ref("");
 const showPopover=ref("");
@@ -67,9 +79,7 @@ const loadStaffList=async()=>{
     return ;
 }
     staffArr.value=result.data.map((staff)=>{
-        return 
-        {
-             text:`${staff.id}:${staff.staffName}`}
+        return    `${staff.id}:${staff.staffName}`
     } );
 }
 const assignStaff=(action)=>

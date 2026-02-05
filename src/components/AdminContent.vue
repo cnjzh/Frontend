@@ -1,7 +1,7 @@
 <template>
     <van-tabs v-model:active="componentName">
-  <van-tab title="工单列表" name="AppAdminList">工单列表</van-tab>
-  <van-tab title="创建新员工" name="AppAdminCreateStaff">创建新员工</van-tab>
+  <van-tab title="工单列表" name="AppAdminList"></van-tab>
+  <van-tab title="创建新员工" name="AppAdminCreateStaff"></van-tab>
 
 <!-- <keep-alive>
   <component :is="componentName"></component>
