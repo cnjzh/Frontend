@@ -1,7 +1,6 @@
 <template>
   
 
-  
 <div  class="center"  v-show="!show_staff_list">
     <h3 v-if="issueObjArr.length>0">历史工单数量{{ issueObjArr.length   }}
       <div v-for="issueObj in issueObjArr">
@@ -48,8 +47,9 @@
         </van-button> 
         <van-divider />
     </div>
+    </van-list>
    
-</van-list>
+
 </template>
 
 <script setup>
@@ -103,7 +103,29 @@ const goToAssign=(id)=>
 }
 //TODO backend updata Issue has problems
 const assignStaff= async (id)=>{
-    fetch(`${API_URL}issue/`)
+   const response=await fetch(`${API_URL}issue`,
+        {
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify( {
+                id:assignIssueId.value,
+                staffId:id,
+                adminId:1,
+            }),
+           
+        }
+    )
+    const result=await response.json();
+    if(!response.ok||result.status!=="sucess")
+    {alert("分配负责人失败，请重试");
+        return ;
+    }
+    alert("分配负责人成功");
+    show_staff_list=false;
+   const idx= issueObjArr.value.findIndex((issueObj)=>issueObj.id==assignIssueId.value);
+   issueObjArr.value[idx].state="fixing";
 }
 onMounted(async() => {
     loadIssueList();
