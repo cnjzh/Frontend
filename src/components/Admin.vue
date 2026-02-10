@@ -37,15 +37,19 @@ class="upload-loading-spinner"
 
    
 </van-form>
-<app-admin-content   v-if="is_admin===true"></app-admin-content>
-TODO
-<!-- <app-staff-content v-else> </app-staff-content> -->
+<div v-if="login_success">
+  <app-admin-content   v-if="is_admin===true"></app-admin-content>
+<staff-content v-else></staff-content>
+<!--TODO-->
+</div>
+
    <!-- <div v-show="login_success">登陆成功</div> -->
 </template>
 
 <script setup>
 import {ref}from "vue";
 import AppAdminContent  from "./AdminContent.vue";
+import StaffContent from "./StaffContent.vue";
 const emit=defineEmits(["loginsucess"])
 const is_admin=ref(false)
 const staffName=ref("");
