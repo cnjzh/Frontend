@@ -13,7 +13,7 @@
     </template>
 <script >
 import {ref}from "vue";
-import AppCreateStaff from "./createStaff.vue"
+import AppCreateStaff from "./CreateStaff.vue"
 import AppAdminIssueList from "./AdminIssueList.vue";
 export default
 {

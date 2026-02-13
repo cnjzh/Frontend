@@ -39,7 +39,7 @@ class="upload-loading-spinner"
 </van-form>
 <div v-if="login_success">
   <app-admin-content   v-if="is_admin===true"></app-admin-content>
-<staff-content v-else></staff-content>
+<staff-content v-else  :staff-id="staffId"></staff-content>
 <!--TODO-->
 </div>
 
@@ -57,6 +57,8 @@ const password=ref("");
 const is_login=ref(false);
 const login_success=ref(false);
 const login_complete=ref(false);
+const staffId=ref(0);
+
 const props=defineProps({
     API_URL:
     {
@@ -69,9 +71,9 @@ const login=async ()=>{
  const response= await fetch(`${props.API_URL}staff?staffName=${staffName.value}&password=${password.value}`);
 
    const result= await response.json();
+   console.log(result);
  login_complete.value=true;
- console.log(response.ok);
- console.log(result.status);
+
  if(!response.ok||result.status!="success"){
     alert("请输入正确的用户名和密码");
     resetLogin();
@@ -79,7 +81,9 @@ const login=async ()=>{
     return ;
 
  }
+  staffId.value=result.data.id;
  login_success.value=true;
+
  is_admin.value=result.data.staffRole==="admin" ;
  emit("loginSuccess");
 }
