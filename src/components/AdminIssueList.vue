@@ -24,7 +24,7 @@
       </div>
          
     </h3>
-    <h3 v-else class="center">未找到历史工单</h3>
+    <h3 v-else class="center">未找到历史信息</h3>
 </div>
 
  <van-list v-show="show_staff_list">
@@ -98,9 +98,9 @@ const loadStaffList=async()=>{
 }
 const goToAssign=(id)=>
 {
-    assignStaffId.value=id;
+    assignIssueId.value=id;
     show_staff_list.value = true;
-}
+};
 //TODO backend updata Issue has problems
 const assignStaff= async (id)=>{
    const response=await fetch(`${API_URL}issue`,
@@ -109,7 +109,7 @@ const assignStaff= async (id)=>{
             headers:{
                 "Content-Type":"application/json",
             },
-            body:JSON.stringify( {
+            body:JSON.stringify({
                 id:assignIssueId.value,
                 staffId:id,
                 adminId:1,
@@ -118,14 +118,15 @@ const assignStaff= async (id)=>{
         }
     )
     const result=await response.json();
-    if(!response.ok||result.status!=="sucess")
+    if(!response.ok||result.status!=="success")
     {alert("分配负责人失败，请重试");
         return ;
     }
     alert("分配负责人成功");
-    show_staff_list=false;
+    show_staff_list.value=false;
    const idx= issueObjArr.value.findIndex((issueObj)=>issueObj.id==assignIssueId.value);
    issueObjArr.value[idx].state="fixing";
+   issueObjArr.value[idx].staffId=id;
 }
 onMounted(async() => {
     loadIssueList();

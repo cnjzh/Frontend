@@ -7,7 +7,7 @@ export const converTimestampToISOString=(timestamp)=>
     const date= new Date(timestamp);
     const hour=date.getHours().toString().padStart(2,"0");
     const originISOString=date.toISOString();
-    const isoString=`${originISOString.slice(0,13)}T${hour}${originISOString.slice(13)}`;
+    const isoString=`${originISOString.slice(0,10)}T${hour}${originISOString.slice(13)}`;
     return isoString;
 }
 
@@ -40,14 +40,14 @@ export const processIssueObj=(issueObj)=>
         createDate:"提交时间",
         description:"工单描述",
         state:"状态",
-        fixDate:"完成时间",
+        fixedDate:"完成时间",
         staffId:"负责人ID"
 
     }
     const stateMap={
-        wait:"",
-        fixing:"",
-        compelete:"",
+        wait:"等待处理",
+        fixing:"处理中",
+        compelete:"已完成",
     }
     Object.entries(issueObj).forEach(([key,value])=>
     {
@@ -55,17 +55,10 @@ export const processIssueObj=(issueObj)=>
         {return;}
         if(key==="state")
         {value=stateMap[value];}
-        if(key==="createDate"||key==="fixDate")
+        if(key==="createDate"||key==="fixedDate")
         {value=value?convertISOStringToDateTime(value):"无";}
         value=value?value:"无";
-
-
-
-
-
-
-
-        resArr.push(`${key}:${value}`);
+        resArr.push(`${keyMap[key]}:${value}`);
     });
     return resArr;
 }
